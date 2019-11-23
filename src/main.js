@@ -1,6 +1,6 @@
 'use strict';
 
-const render = (container, template, place) => {
+const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
@@ -29,7 +29,7 @@ const createMenu = () => {
   );
 };
 const pageHeader = document.querySelector(`.header`);
-render(pageHeader, createRank(), `beforeend`);
+render(pageHeader, createRank());
 const main = document.querySelector(`.main`);
 render(main, createMenu(), `afterbegin`);
 
@@ -55,12 +55,8 @@ const createCardTemplate = () => {
   );
 };
 
-const createFilmCard = (quantity) => {
-  let cardTemplate = ``;
-  for (let i = 0; i < quantity; i++) {
-    cardTemplate += createCardTemplate();
-  }
-  return cardTemplate;
+const addCards = (quant) => {
+  return new Array(quant).fill(createCardTemplate()).join(``);
 };
 
 const createShowMoreButton = () => {
@@ -75,22 +71,34 @@ const createFilmsContainer = () => {
       <section class="films-list">
         <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
 
-        <div class="films-list__container"> ${createFilmCard(5)} </div>
-        ${createShowMoreButton()}
+        <div class="films-list__container"></div>
+
       </section>
       <section class="films-list--extra">
         <h2 class="films-list__title">Top rated</h2>
 
-        <div class="films-list__container"> ${createFilmCard(2)} </div>
+        <div class="films-list__container"></div>
       </section>
       <section class="films-list--extra">
         <h2 class="films-list__title">Most commented</h2>
 
-        <div class="films-list__container"> ${createFilmCard(2)} </div>
-      </section>`
+        <div class="films-list__container"></div>
+      </section>
+    </section>`
   );
 };
-render(main, createFilmsContainer(), `beforeend`);
+render(main, createFilmsContainer());
+
+const filmListMain = main.querySelector(`.films-list`);
+render(filmListMain, createShowMoreButton());
+
+const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
+const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
+render(cardBoxMain, addCards(5));
+cardBoxExtra.forEach((element) => {
+  render(element, addCards(2));
+});
+
 const createPopup = () => {
   return (
     `<section class="film-details">
