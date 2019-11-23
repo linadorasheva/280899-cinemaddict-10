@@ -55,8 +55,8 @@ const createCardTemplate = () => {
   );
 };
 
-const addCards = (quant) => {
-  return new Array(quant).fill(createCardTemplate()).join(``);
+const addCards = (quantity) => {
+  return new Array(quantity).fill(createCardTemplate()).join(``);
 };
 
 const createShowMoreButton = () => {
