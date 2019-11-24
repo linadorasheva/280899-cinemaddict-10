@@ -273,4 +273,4 @@ const createPopup = () => {
   );
 };
 const pageFooter = document.querySelector(`.footer`);
-render(pageFooter, createPopup(), `beforebegin`);
+render(pageFooter, createPopup(), `afterend`);
