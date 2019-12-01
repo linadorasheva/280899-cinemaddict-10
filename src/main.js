@@ -25,12 +25,8 @@ render(filmListMain, createShowMoreButton());
 
 const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
 const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
-render(cardBoxMain, createCardMarkup(cards));
-console.log(cards);
 
-// cardBoxExtra.forEach((element) => {
-//   render(element, createCardMarkup(generateCards(2)));
-// });
+render(cardBoxMain, createCardMarkup(cards));
 
 const pageFooter = document.querySelector(`.footer`);
-// render(pageFooter, createPopup(), `afterend`);
+render(pageFooter, createPopup(), `afterend`);
