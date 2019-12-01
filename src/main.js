@@ -32,4 +32,4 @@ cardBoxExtra.forEach((element) => {
 });
 
 const pageFooter = document.querySelector(`.footer`);
-render(pageFooter, createPopup(), `afterend`);
+// render(pageFooter, createPopup(), `afterend`);
