@@ -35,21 +35,23 @@ const filmsGenres = [`Musical`, `Western`, `Drama`, `Comedy`, `Cartoon`, `Trille
 
 const getDescription = () => util.shuffle(descriptionTmpl).slice(0, util.getRandomInteger(DescriptionSize.MIN, DescriptionSize.MAX));
 
-const generateCardData = () => {
+const generateCard = () => {
+  const descriptionFilm = getDescription();
+
   return {
     img: `./public/posters/${util.getRandomArrayItem(posters)}`,
     name: util.getRandomArrayItem(filmsTitles),
     ratio: util.getRandomInteger(Ratio.MIN, Ratio.MAX),
-    description: getDescription().join(`. `),
     date: util.getRandomInteger(Date.MIN, Date.MAX),
     duration: `${util.getRandomInteger(DurationInHours.MIN, DurationInHours.MAX)}h ${util.getRandomInteger(DurationInMinutes.MIN, DurationInMinutes.MAX)}m`,
     genre: util.getRandomArrayItem(filmsGenres),
-    comments: `${util.getRandomInteger(Ratio.MIN, Ratio.MAX)} comments`
+    comments: `${util.getRandomInteger(Ratio.MIN, Ratio.MAX)} comments`,
+    description: descriptionFilm.join(`. `)
   };
 };
 
 const generateCards = (quantity) => {
-  return new Array(quantity).fill(``).map(generateCardData);
+  return new Array(quantity).fill(``).map(generateCard);
 };
 
-export {generateCards};
+export {generateCard, generateCards};

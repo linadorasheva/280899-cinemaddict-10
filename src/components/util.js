@@ -6,10 +6,10 @@ function getRandomInteger(min, max) {
 
 // получить случайный элемент массива
 const getRandomArrayItem = (array) => {
-  const randomIndex = getRandomInteger(0, array.length);
-
-  return array[randomIndex];
+  const randomArrElement = Math.floor(Math.random() * array.length);
+  return array[randomArrElement];
 };
+
 
 // Тасование Фишера — Йетса
 function shuffle(array) {

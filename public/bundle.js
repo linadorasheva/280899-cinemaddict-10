@@ -86,62 +86,31 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/main.js":
-/*!*********************!*\
-  !*** ./src/main.js ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/components/card-template.js":
+/*!*****************************************!*\
+  !*** ./src/components/card-template.js ***!
+  \*****************************************/
+/*! exports provided: createCardTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCardTemplate", function() { return createCardTemplate; });
+const createCardMarkup = (cardData) => {
+  const {img, name, ratio, description, date, duration, genre, comments} = cardData;
 
-
-const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
-const createRank = () => {
-  return (
-    `<section class="header__profile profile">
-      <p class="profile__rating">Movie Buff</p>
-      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    </section>`
-  );
-};
-const createMenu = () => {
-  return (
-    `<nav class="main-navigation">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
-      <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
-    </nav>
-    <ul class="sort">
-      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-      <li><a href="#" class="sort__button">Sort by date</a></li>
-      <li><a href="#" class="sort__button">Sort by rating</a></li>
-    </ul>`
-  );
-};
-const pageHeader = document.querySelector(`.header`);
-render(pageHeader, createRank());
-const main = document.querySelector(`.main`);
-render(main, createMenu(), `afterbegin`);
-
-const createCardTemplate = () => {
   return (
     `<article class="film-card">
-      <h3 class="film-card__title">The Man with the Golden Arm</h3>
-      <p class="film-card__rating">9.0</p>
+      <h3 class="film-card__title">${name}</h3>
+      <p class="film-card__rating">${ratio}</p>
       <p class="film-card__info">
-        <span class="film-card__year">1955</span>
-        <span class="film-card__duration">1h 59m</span>
-        <span class="film-card__genre">Drama</span>
+        <span class="film-card__year">${date}</span>
+        <span class="film-card__duration">${duration}</span>
+        <span class="film-card__genre">${genre}</span>
       </p>
       <img src="./images/posters/the-man-with-the-golden-arm.jpg" alt="" class="film-card__poster">
-      <p class="film-card__description">Frankie Machine (Frank Sinatra) is released from the federal Narcotic Farm in Lexington, Kentucky with a set of drums and a new outlook on…</p>
-      <a class="film-card__comments">18 comments</a>
+      <p class="film-card__description">${description}</p>
+      <a class="film-card__comments">${comments}</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched  film-card__controls-item--active">Mark as watched</button>
@@ -151,16 +120,23 @@ const createCardTemplate = () => {
   );
 };
 
-const addCards = (quantity) => {
-  return new Array(quantity).fill(createCardTemplate()).join(``);
+const createCardTemplate = (cards) => {
+  const cardsMarkUp = cards.map((it) => createCardMarkup(it)).join(`\n`);
 };
 
-const createShowMoreButton = () => {
-  return (
-    `<button class="films-list__show-more">Show more</button>`
-  );
-};
 
+/***/ }),
+
+/***/ "./src/components/films-container.js":
+/*!*******************************************!*\
+  !*** ./src/components/films-container.js ***!
+  \*******************************************/
+/*! exports provided: createFilmsContainer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFilmsContainer", function() { return createFilmsContainer; });
 const createFilmsContainer = () => {
   return (
     `<section class="films">
@@ -183,18 +159,50 @@ const createFilmsContainer = () => {
     </section>`
   );
 };
-render(main, createFilmsContainer());
 
-const filmListMain = main.querySelector(`.films-list`);
-render(filmListMain, createShowMoreButton());
 
-const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
-const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
-render(cardBoxMain, addCards(5));
-cardBoxExtra.forEach((element) => {
-  render(element, addCards(2));
-});
+/***/ }),
 
+/***/ "./src/components/menu.js":
+/*!********************************!*\
+  !*** ./src/components/menu.js ***!
+  \********************************/
+/*! exports provided: createMenu */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMenu", function() { return createMenu; });
+const createMenu = () => {
+  return (
+    `<nav class="main-navigation">
+      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
+      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
+      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
+      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
+      <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
+    </nav>
+    <ul class="sort">
+      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+      <li><a href="#" class="sort__button">Sort by date</a></li>
+      <li><a href="#" class="sort__button">Sort by rating</a></li>
+    </ul>`
+  );
+};
+
+
+/***/ }),
+
+/***/ "./src/components/popup.js":
+/*!*********************************!*\
+  !*** ./src/components/popup.js ***!
+  \*********************************/
+/*! exports provided: createPopup */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPopup", function() { return createPopup; });
 const createPopup = () => {
   return (
     `<section class="film-details">
@@ -368,8 +376,98 @@ const createPopup = () => {
     </section>`
   );
 };
+
+
+/***/ }),
+
+/***/ "./src/components/rank.js":
+/*!********************************!*\
+  !*** ./src/components/rank.js ***!
+  \********************************/
+/*! exports provided: createRank */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRank", function() { return createRank; });
+const createRank = () => {
+  return (
+    `<section class="header__profile profile">
+      <p class="profile__rating">Movie Buff</p>
+      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+    </section>`
+  );
+};
+
+
+/***/ }),
+
+/***/ "./src/components/show-more-button.js":
+/*!********************************************!*\
+  !*** ./src/components/show-more-button.js ***!
+  \********************************************/
+/*! exports provided: createShowMoreButton */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createShowMoreButton", function() { return createShowMoreButton; });
+const createShowMoreButton = () => {
+  return (
+    `<button class="films-list__show-more">Show more</button>`
+  );
+};
+
+
+/***/ }),
+
+/***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_menu_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/menu.js */ "./src/components/menu.js");
+/* harmony import */ var _components_rank_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/rank.js */ "./src/components/rank.js");
+/* harmony import */ var _components_films_container_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/films-container.js */ "./src/components/films-container.js");
+/* harmony import */ var _components_card_template_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/card-template.js */ "./src/components/card-template.js");
+/* harmony import */ var _components_show_more_button_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/show-more-button.js */ "./src/components/show-more-button.js");
+/* harmony import */ var _components_popup_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/popup.js */ "./src/components/popup.js");
+
+
+
+
+
+
+
+
+const render = (container, template, place = `beforeend`) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+const pageHeader = document.querySelector(`.header`);
+render(pageHeader, Object(_components_rank_js__WEBPACK_IMPORTED_MODULE_1__["createRank"])());
+
+const main = document.querySelector(`.main`);
+render(main, Object(_components_menu_js__WEBPACK_IMPORTED_MODULE_0__["createMenu"])(), `afterbegin`);
+
+render(main, Object(_components_films_container_js__WEBPACK_IMPORTED_MODULE_2__["createFilmsContainer"])());
+
+const filmListMain = main.querySelector(`.films-list`);
+render(filmListMain, Object(_components_show_more_button_js__WEBPACK_IMPORTED_MODULE_4__["createShowMoreButton"])());
+
+const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
+const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
+render(cardBoxMain, Object(_components_card_template_js__WEBPACK_IMPORTED_MODULE_3__["createCardTemplate"])(generateCards(5)));
+cardBoxExtra.forEach((element) => {
+  render(element, Object(_components_card_template_js__WEBPACK_IMPORTED_MODULE_3__["createCardTemplate"])(generateCards(2)));
+});
+
 const pageFooter = document.querySelector(`.footer`);
-render(pageFooter, createPopup(), `afterend`);
+// render(pageFooter, createPopup(), `afterend`);
 
 
 /***/ })
