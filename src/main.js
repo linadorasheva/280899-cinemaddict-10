@@ -6,12 +6,13 @@ import {createShowMoreButton} from './components/show-more-button.js';
 import {createPopup} from './components/popup.js';
 
 import {generateCards} from './mock/card.js';
+import {shuffleArray} from './util.js';
 
 const QUANTITY_CARDS = 100;
 const cards = generateCards(QUANTITY_CARDS);
 
 const getMarkupCards = (count) => {
-  const markupCards = cards.filter(() => Math.random() > 0.5)
+  const markupCards = shuffleArray(cards)
     .slice(0, count)
     .map((it)=> (createCardTemplate(it)))
     .join(`\n`);
@@ -31,7 +32,7 @@ const pageHeader = document.querySelector(`.header`);
 render(pageHeader, createRank(QUANTITY_CARDS));
 
 const main = document.querySelector(`.main`);
-render(main, createMenu(), `afterbegin`);
+render(main, createMenu(cards), `afterbegin`);
 
 render(main, createFilmsContainer());
 
@@ -41,8 +42,6 @@ render(filmListMain, createShowMoreButton());
 const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
 const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
 render(cardBoxMain, getMarkupCards(5));
-
-
 
 cardBoxExtra.forEach((element) => {
   render(element, getMarkupCards(2));
