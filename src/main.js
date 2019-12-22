@@ -5,6 +5,7 @@ import {createCardTemplate} from './components/card-template.js';
 import {createShowMoreButton} from './components/show-more-button.js';
 import {createPopup} from './components/popup.js';
 
+
 import {generateCards} from './mock/card.js';
 import {shuffleArray} from './util.js';
 
@@ -14,7 +15,7 @@ const cards = generateCards(QUANTITY_CARDS);
 const getMarkupCards = (count) => {
   const markupCards = shuffleArray(cards)
     .slice(0, count)
-    .map((it)=> (createCardTemplate(it)))
+    .map((it) => (createCardTemplate(it)))
     .join(`\n`);
 
   return markupCards;
