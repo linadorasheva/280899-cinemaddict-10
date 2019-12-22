@@ -47,4 +47,4 @@ cardBoxExtra.forEach((element) => {
   render(element, getMarkupCards(2));
 });
 
-// render(pageFooter, createPopup(), `afterend`);
+render(pageFooter, createPopup(cards[0]), `afterend`);
