@@ -1,4 +1,5 @@
 import * as util from '../util.js';
+const DATE_INTERVAL = 10;
 
 const filmNames = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Властелин колец`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`];
 
@@ -12,7 +13,7 @@ const Rating = {
   MAX: 100
 };
 
-const Date = {
+const Release = {
   MIN: 1972,
   MAX: 2014
 };
@@ -31,7 +32,7 @@ const Comments = {
 };
 
 const generateFilmDescription = (template) => {
-  return template.split(`.`).filter(() => Math.random() > 0.5).slice(0, 3);
+  return template.split(`.`).filter(() => Math.random() > 0.5).slice(0, 3).join(`.`);
 };
 
 const generateFilmPosterSrc = () => {
@@ -50,13 +51,24 @@ const generateCommentsQuantity = () => {
   return `${util.getRandomInteger(Comments.MIN, Comments.MAX)} comments`;
 };
 
+const getDate = () => {
+  const date = new Date();
+  const diffValue = util.getRandomIntegerNumber(0, 7);
+
+  date.setDate(date.getDate() + diffValue);
+  date.setMonth(date.getMonth() + diffValue);
+  date.setFullYear(util.getRandomInteger(Release.MIN, Release.MAX));
+
+  return date;
+};
+
 const generateCard = () => {
   return {
     filmPosterSrc: generateFilmPosterSrc(),
     filmName: util.getRandomArrayItem(filmNames),
     filmDescription: generateFilmDescription(filmDescriptionTemplate),
     filmRating: generateFilmRating(),
-    filmDate: util.getRandomInteger(Date.MIN, Date.MAX),
+    filmDate: getDate(),
     filmDuration: generateFilmDuration(),
     filmGenre: util.getRandomArrayItem(genres),
     filmComments: generateCommentsQuantity(),
