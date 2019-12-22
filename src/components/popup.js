@@ -1,4 +1,12 @@
-export const createPopup = () => {
+import {MONTH_NAMES} from '../constants';
+
+export const createPopup = (card) => {
+  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmComments, isAddWatchList, isWatched, isFavorite} = card;
+
+  const getReleaseDate = () => {
+    return `${filmDate.getDate()} ${MONTH_NAMES[filmDate.getMonth()]} ${filmDate.getFullYear()}`;
+  };
+
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -40,7 +48,7 @@ export const createPopup = () => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">30 March 1945</td>
+                  <td class="film-details__cell">${getReleaseDate()}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
