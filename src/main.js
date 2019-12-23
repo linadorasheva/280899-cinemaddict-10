@@ -1,4 +1,3 @@
-import {KeyCode} from './constants.js';
 import {shuffleArray, isEscPress} from './util.js';
 
 import {createMenu} from './components/menu.js';
