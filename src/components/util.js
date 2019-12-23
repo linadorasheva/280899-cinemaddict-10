@@ -10,7 +10,6 @@ const getRandomArrayItem = (array) => {
   return array[randomArrElement];
 };
 
-
 // Тасование Фишера — Йетса
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -20,4 +19,15 @@ function shuffle(array) {
   }
   return array;
 }
-export {getRandomInteger, getRandomArrayItem, shuffle};
+
+// Нажат escape
+const isEscPress = (evt) => {
+  return evt.keyCode === KeyCode.ESC_KEY_CODE;
+};
+
+// Нажат enter
+const isEnterPress = (evt) => {
+  return evt.keyCode === KeyCode.ENTER_KEY_CODE;
+};
+
+export {getRandomInteger, getRandomArrayItem, shuffle, isEscPress, isEnterPress};
