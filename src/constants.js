@@ -1,4 +1,4 @@
-export const MONTH_NAMES = [
+const MONTH_NAMES = [
   `January`,
   `February`,
   `March`,
@@ -12,3 +12,10 @@ export const MONTH_NAMES = [
   `November`,
   `December`,
 ];
+
+const KeyCode = {
+  ESC_KEY_CODE: 27,
+  ENTER_KEY_CODE: 13
+};
+
+export {MONTH_NAMES, KeyCode};
