@@ -69,7 +69,7 @@ const generateCard = () => {
     filmRating: generateFilmRating(),
     filmDate: getDate(),
     filmDuration: generateFilmDuration(),
-    filmGenre: util.getRandomArrayItem(genres),
+    filmGenre: new Set(genres),
     filmComments: generateCommentsQuantity(),
     isAddWatchList: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
