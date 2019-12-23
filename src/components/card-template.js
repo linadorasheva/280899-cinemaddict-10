@@ -1,3 +1,5 @@
+import {getRandomArrayItem} from '../util.js';
+
 const getButtonClass = (flag) => {
   return flag ? `film-card__controls-item--active` : ``;
 };
@@ -13,6 +15,10 @@ export const createCardTemplate = (card) => {
     return filmDate.getFullYear();
   };
 
+  const generateGenre = () => {
+    return getRandomArrayItem(Array.from(filmGenre));
+  }
+
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${filmName}</h3>
@@ -20,7 +26,7 @@ export const createCardTemplate = (card) => {
       <p class="film-card__info">
         <span class="film-card__year">${getShortDate()}</span>
         <span class="film-card__duration">${filmDuration}</span>
-        <span class="film-card__genre">${filmGenre}</span>
+        <span class="film-card__genre">${generateGenre()}</span>
       </p>
       <img src="${filmPosterSrc}" alt="" class="film-card__poster">
       <p class="film-card__description">${getShortFilmDescription()}</p>
