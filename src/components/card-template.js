@@ -30,7 +30,7 @@ export const createCardTemplate = (card) => {
       </p>
       <img src="${filmPosterSrc}" alt="" class="film-card__poster">
       <p class="film-card__description">${getShortFilmDescription()}</p>
-      <a class="film-card__comments">${filmComments}</a>
+      <a class="film-card__comments">${filmComments} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${getButtonClass(isAddWatchList)}">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${getButtonClass(isWatched)}">Mark as watched</button>

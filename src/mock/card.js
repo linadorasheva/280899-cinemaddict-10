@@ -64,7 +64,7 @@ const generateFilmDuration = () => {
 };
 
 const generateCommentsQuantity = () => {
-  return `${util.getRandomInteger(Comments.MIN, Comments.MAX)} comments`;
+  return util.getRandomInteger(Comments.MIN, Comments.MAX);
 };
 
 const getDate = () => {
