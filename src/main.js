@@ -1,3 +1,6 @@
+import {KeyCode} from './constants.js';
+import {shuffleArray, isEscPress} from './util.js';
+
 import {createMenu} from './components/menu.js';
 import {createRank} from './components/rank.js';
 import {createFilmsContainer} from './components/films-container.js';
@@ -5,9 +8,8 @@ import {createCardTemplate} from './components/card-template.js';
 import {createShowMoreButton} from './components/show-more-button.js';
 import {createPopup} from './components/popup.js';
 
-
 import {generateCards} from './mock/card.js';
-import {shuffleArray} from './util.js';
+
 
 const QUANTITY_CARDS = 100;
 const cards = generateCards(QUANTITY_CARDS);
@@ -48,4 +50,24 @@ cardBoxExtra.forEach((element) => {
   render(element, getMarkupCards(2));
 });
 
-render(pageFooter, createPopup(cards[0]), `afterend`);
+
+const onEscPress = () => {
+  if (isEscPress) {
+    popupClose();
+  }
+};
+
+const popupClose = () => {
+  document.querySelector(`.film-details`).remove();
+  document.removeEventListener(`keydown`, onEscPress);
+};
+
+const popupOpen = ()=> {
+  render(pageFooter, createPopup(cards[0]), `afterend`);
+  const popup = document.querySelector(`.film-details`);
+  const popupCloseBtn = popup.querySelector(`.film-details__close-btn`);
+  popupCloseBtn.addEventListener(`click`, () => popupClose());
+  document.addEventListener(`keydown`, onEscPress);
+};
+
+popupOpen();
