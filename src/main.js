@@ -13,8 +13,8 @@ import {generateCards} from './mock/card.js';
 const QUANTITY_CARDS = 100;
 const cards = generateCards(QUANTITY_CARDS);
 
-const getMarkupCards = (count) => {
-  const markupCards = shuffleArray(cards)
+const getMarkupCards = (count, data) => {
+  const markupCards = shuffleArray(data)
     .slice(0, count)
     .map((it) => (createCardTemplate(it)))
     .join(`\n`);
@@ -43,11 +43,24 @@ render(filmListMain, createShowMoreButton());
 
 const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
 const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
-render(cardBoxMain, getMarkupCards(5));
+const cardBoxTopRating = cardBoxExtra[0];
+const cardBoxMostCommented = cardBoxExtra[1];
 
-cardBoxExtra.forEach((element) => {
-  render(element, getMarkupCards(2));
-});
+render(cardBoxMain, getMarkupCards(5, cards));
+
+const getTopRatingCardList = () => {
+  const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating).slice(0, 2);
+  return topRatingCards;
+};
+
+const getTopCommentsCardList = () => {
+  const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments).slice(0, 2);
+  return topCommentsCards;
+};
+
+
+render(cardBoxTopRating, getMarkupCards(2, getTopRatingCardList()));
+render(cardBoxMostCommented, getMarkupCards(2, getTopCommentsCardList()));
 
 
 const onEscPress = () => {
