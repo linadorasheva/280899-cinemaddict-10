@@ -78,7 +78,7 @@ const getDate = () => {
   return date;
 };
 
-const filmDirector = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
+const filmDirectors = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmWriter = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmActors = [`Robert De Niro`, `Gwyneth Paltrow`, `Al Pacino`, `Brad Pitt`, `Leonardo DiCaprio`, `Tom Cruise`, `Kate Winslet`, `Tom Hardy`, `Joel Edgerton`, `Marlon Brando`, `Emma Stone`];
 const filmCountries = [`USA`, `UK`, `Italy`, `Spain`, `France`, `Japan`, `Norway`, `Portugal`, `Mexico`];
@@ -87,7 +87,7 @@ const filmAgeRatings = [0, 6, 12, 16, 18];
 const generateCard = () => {
   return {
     filmPosterSrc: generateFilmPosterSrc(),
-    filmName: util.getRandomArrayItem(filmNames),
+    filmNames: new Set(filmNames),
     filmOriginalName: filmOriginalsName,
     filmDescription: generateFilmDescription(filmDescriptionTemplate),
     filmRating: generateFilmRating(),
@@ -98,7 +98,7 @@ const generateCard = () => {
     isAddWatchList: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
-    filmDirector: util.getRandomArrayItem(filmDirector),
+    filmDirectors: new Set(filmDirectors),
     filmWriters: new Set(filmWriter),
     filmActors: new Set(filmActors),
     filmCountry: util.getRandomArrayItem(filmCountries),
