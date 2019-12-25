@@ -9,21 +9,11 @@ import {createPopup} from './components/popup.js';
 
 import {generateCards} from './mock/card.js';
 
-
 const QUANTITY_CARDS = 15;
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;
 
 const cards = generateCards(QUANTITY_CARDS);
-
-// const getMarkupCards = (count, data) => {
-//   const markupCards = shuffleArray(data)
-//     .slice(0, count)
-//     .map((it) => (createCardTemplate(it)))
-//     .join(`\n`);
-
-//   return markupCards;
-// };
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
