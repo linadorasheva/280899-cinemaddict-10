@@ -36,9 +36,8 @@ render(filmListMain, createShowMoreButton());
 const loadMoreButton = filmListMain.querySelector(`.films-list__show-more`);
 
 const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
-const cardBoxExtra = main.querySelectorAll(`.films-list--extra .films-list__container`);
-const cardBoxTopRating = cardBoxExtra[0];
-const cardBoxMostCommented = cardBoxExtra[1];
+const cardBoxTopRating = main.querySelector(`.films-list--top-rated .films-list__container`);
+const cardBoxMostCommented = main.querySelector(`.films-list--most-commented .films-list__container`);
 
 let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
 cards.slice(0, showingCardsCount).forEach((card) => render(cardBoxMain, createCardTemplate(card)));
