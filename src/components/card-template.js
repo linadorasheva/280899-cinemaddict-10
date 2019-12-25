@@ -5,7 +5,9 @@ const getButtonClass = (flag) => {
 };
 
 export const createCardTemplate = (card) => {
-  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmComments, isAddWatchList, isWatched, isFavorite} = card;
+  const {filmPosterSrc, filmNames, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmComments, isAddWatchList, isWatched, isFavorite} = card;
+
+  const filmName = getRandomArrayItem(Array.from(filmNames));
 
   const getShortFilmDescription = () => {
     return filmDescription.length > 139 ? `${filmDescription.slice(0, 139)}...` : filmDescription;
@@ -17,7 +19,7 @@ export const createCardTemplate = (card) => {
 
   const generateGenre = () => {
     return getRandomArrayItem(Array.from(filmGenre));
-  }
+  };
 
   return (
     `<article class="film-card">

@@ -9,8 +9,11 @@ const generateGenreMarkUp = (data) => {
   return generateGenres(data).map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
 };
 
-export const createPopup = (card, cardExtended) => {
-  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmComments, isAddWatchList, isWatched, isFavorite, filmOriginalName, filmDirector, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
+export const createPopup = (card) => {
+  const {filmPosterSrc, filmNames, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
+
+  const filmName = getRandomArrayItem(Array.from(filmNames));
+  const filmDirector = getRandomArrayItem(Array.from(filmDirectors));
 
   const generateActors = () => {
     return shuffleArray(Array.from(filmActors)).filter(() => Math.random() > 0.5).join(`, `);
