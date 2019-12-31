@@ -1,4 +1,6 @@
-export const createMenu = (cards) => {
+import {createElement} from '../util.js';
+
+const createMenu = (cards) => {
   const getQuantityFilms = (flag) => {
     const quantityFilms = cards.filter((it) => it[flag]).length;
 
@@ -20,3 +22,26 @@ export const createMenu = (cards) => {
     </ul>`
   );
 };
+
+export default class MenuComponent {
+  constructor(cards) {
+    this._cards = cards;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenu(this._cards);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
