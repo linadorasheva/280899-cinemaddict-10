@@ -33,4 +33,31 @@ const isEnterPress = (evt) => {
   return evt.keyCode === KeyCode.ENTER_KEY_CODE;
 };
 
-export {getRandomArrayItem, getRandomIntegerNumber, getRandomInteger, shuffleArray, isEscPress, isEnterPress};
+const render = (container, template, place = `beforeend`) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export {getRandomArrayItem, getRandomIntegerNumber, getRandomInteger, shuffleArray, isEscPress, isEnterPress, RenderPosition, createElement, render};
