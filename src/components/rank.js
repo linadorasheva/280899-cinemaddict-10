@@ -1,6 +1,7 @@
 import {getRank} from '../mock/rank.js';
+import {createElement} from '../util.js';
 
-export const createRank = (quantity) => {
+const createRank = (quantity) => {
   const rankName = getRank(quantity);
 
   return (
@@ -10,3 +11,26 @@ export const createRank = (quantity) => {
     </section>`
   );
 };
+
+export default class RankComponent {
+  constructor(quantity) {
+    this._quantity = quantity;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createRank(this._quantity);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
