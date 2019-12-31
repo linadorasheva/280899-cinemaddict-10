@@ -33,10 +33,6 @@ const isEnterPress = (evt) => {
   return evt.keyCode === KeyCode.ENTER_KEY_CODE;
 };
 
-const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
 const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
