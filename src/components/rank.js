@@ -1,5 +1,19 @@
-import {getRank} from '../mock/rank.js';
-import {createElement} from '../util.js';
+
+import {getRandomInteger, createElement} from '../util.js';
+
+const getRank = (quantity) => {
+  const filmsWatched = getRandomInteger(0, quantity);
+
+  switch (true) {
+    case filmsWatched > 1 && filmsWatched <= 10:
+      return `Novice`;
+    case filmsWatched > 10 && filmsWatched <= 20:
+      return `Fan`;
+    case filmsWatched > 20:
+      return `Movie Buff`;
+    default: return ``;
+  }
+};
 
 const createRank = (quantity) => {
   const rankName = getRank(quantity);
