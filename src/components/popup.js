@@ -1,5 +1,5 @@
 import {MONTH_NAMES} from '../constants';
-import {shuffleArray, getRandomArrayItem} from '../util.js';
+import {shuffleArray, getRandomArrayItem, createElement} from '../util.js';
 
 const generateGenres = (data) => {
   return shuffleArray(Array.from(data)).filter(() => Math.random() > 0.5);
@@ -9,7 +9,7 @@ const generateGenreMarkUp = (data) => {
   return generateGenres(data).map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
 };
 
-export const createPopup = (card) => {
+const createPopup = (card) => {
   const {filmPosterSrc, filmNames, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
 
   const filmName = getRandomArrayItem(Array.from(filmNames));
@@ -200,3 +200,26 @@ export const createPopup = (card) => {
     </section>`
   );
 };
+
+export default class PopupComponent {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopup(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
