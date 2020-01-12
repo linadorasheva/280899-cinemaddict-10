@@ -25,7 +25,7 @@ const onEscPress = () => {
 };
 
 const popupClose = () => {
-  document.querySelector(`.film-details`).remove();
+  pageBody.removeChild(pageBody.querySelector(`.film-details`));
   document.removeEventListener(`keydown`, onEscPress);
 };
 
