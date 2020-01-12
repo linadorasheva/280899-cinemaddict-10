@@ -1,4 +1,4 @@
-import * as util from '../util.js';
+import {getRandomArrayItem, getRandomInteger, getRandomIntegerNumber} from '../util.js';
 
 const filmNames = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`, `Семь`];
 
@@ -52,28 +52,28 @@ const generateFilmDescription = (template) => {
 };
 
 const generateFilmPosterSrc = () => {
-  return `${imgPath}${util.getRandomArrayItem(imgNames)}`;
+  return `${imgPath}${getRandomArrayItem(imgNames)}`;
 };
 
 const generateFilmRating = () => {
-  return util.getRandomInteger(Rating.MIN, Rating.MAX) / 10;
+  return getRandomInteger(Rating.MIN, Rating.MAX) / 10;
 };
 
 const generateFilmDuration = () => {
-  return `${util.getRandomInteger(Timing.hourMin, Timing.hourMax)}h ${util.getRandomInteger(Timing.minuteMin, Timing.minuteMax)}m`;
+  return `${getRandomInteger(Timing.hourMin, Timing.hourMax)}h ${getRandomInteger(Timing.minuteMin, Timing.minuteMax)}m`;
 };
 
 const generateCommentsQuantity = () => {
-  return util.getRandomInteger(Comments.MIN, Comments.MAX);
+  return getRandomInteger(Comments.MIN, Comments.MAX);
 };
 
 const getDate = () => {
   const date = new Date();
-  const diffValue = util.getRandomIntegerNumber(0, 7);
+  const diffValue = getRandomIntegerNumber(0, 7);
 
   date.setDate(date.getDate() + diffValue);
   date.setMonth(date.getMonth() + diffValue);
-  date.setFullYear(util.getRandomInteger(Release.MIN, Release.MAX));
+  date.setFullYear(getRandomInteger(Release.MIN, Release.MAX));
 
   return date;
 };
@@ -85,15 +85,19 @@ const filmCountries = [`USA`, `UK`, `Italy`, `Spain`, `France`, `Japan`, `Norway
 const filmAgeRatings = [0, 6, 12, 16, 18];
 
 const generateCard = () => {
+  const generateGenres = () => {
+    return genres.filter(() => Math.random() > 0.5)
+  };
+
   return {
     filmPosterSrc: generateFilmPosterSrc(),
-    filmNames: new Set(filmNames),
+    filmName: getRandomArrayItem(filmNames),
     filmOriginalName: filmOriginalsName,
     filmDescription: generateFilmDescription(filmDescriptionTemplate),
     filmRating: generateFilmRating(),
     filmDate: getDate(),
     filmDuration: generateFilmDuration(),
-    filmGenre: new Set(genres),
+    filmGenres: generateGenres(),
     filmComments: generateCommentsQuantity(),
     isAddWatchList: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
@@ -101,8 +105,8 @@ const generateCard = () => {
     filmDirectors: new Set(filmDirectors),
     filmWriters: new Set(filmWriter),
     filmActors: new Set(filmActors),
-    filmCountry: util.getRandomArrayItem(filmCountries),
-    filmAgeRating: util.getRandomArrayItem(filmAgeRatings)
+    filmCountry: getRandomArrayItem(filmCountries),
+    filmAgeRating: getRandomArrayItem(filmAgeRatings)
   };
 };
 

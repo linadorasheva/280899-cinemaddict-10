@@ -15,14 +15,6 @@ const getRandomArrayItem = (array) => {
   return array[randomIndex];
 };
 
-const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
-
 // Нажат escape
 const isEscPress = (evt) => {
   return evt.keyCode === KeyCode.ESC_KEY_CODE;
@@ -56,4 +48,4 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {getRandomArrayItem, getRandomIntegerNumber, getRandomInteger, shuffleArray, isEscPress, isEnterPress, RenderPosition, createElement, render};
+export {getRandomArrayItem, getRandomIntegerNumber, getRandomInteger, isEscPress, isEnterPress, RenderPosition, createElement, render};
