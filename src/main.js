@@ -7,6 +7,7 @@ import FilmsContainerComponent from './components/films-container.js';
 import CardComponent from './components/card-template.js';
 import ShowMoreButtonComponent from './components/show-more-button.js';
 import PopupComponent from './components/popup.js';
+import NoMoviesComponent from './components/no-movies.js';
 
 import {generateCards} from './mock/card.js';
 
@@ -25,8 +26,13 @@ const onEscPress = () => {
 };
 
 const popupClose = () => {
-  document.querySelector(`.film-details`).remove();
+  pageBody.removeChild(pageBody.querySelector(`.film-details`));
   document.removeEventListener(`keydown`, onEscPress);
+};
+
+const popupOpen = (element) => {
+  render(pageBody, element, RenderPosition.BEFOREEND);
+  document.addEventListener(`keydown`, onEscPress);
 };
 
 const renderCard = (card, container) => {
@@ -39,20 +45,17 @@ const renderCard = (card, container) => {
 
   const filmPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
   filmPoster.addEventListener(`click`, () => {
-    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
-    document.addEventListener(`keydown`, onEscPress);
+    popupOpen(popupComponent.getElement());
   });
 
   const filmTitle = cardComponent.getElement().querySelector(`.film-card__title`);
   filmTitle.addEventListener(`click`, () => {
-    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
-    document.addEventListener(`keydown`, onEscPress);
+    popupOpen(popupComponent.getElement());
   });
 
   const filmComments = cardComponent.getElement().querySelector(`.film-card__comments`);
   filmComments.addEventListener(`click`, () => {
-    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
-    document.addEventListener(`keydown`, onEscPress);
+    popupOpen(popupComponent.getElement());
   });
 
   render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
@@ -70,40 +73,45 @@ const main = document.querySelector(`.main`);
 render(main, new MenuComponent(cards).getElement(), RenderPosition.AFTERBEGIN);
 render(main, new SortingComponent().getElement(), RenderPosition.BEFOREEND);
 
-render(main, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
-
-const filmListMain = main.querySelector(`.films-list`);
-const loadMoreButton = new ShowMoreButtonComponent();
-render(filmListMain, loadMoreButton.getElement(), RenderPosition.BEFOREEND);
-
-const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
-
-const cardBoxTopRating = main.querySelector(`.films-list--top-rated .films-list__container`);
-const cardBoxMostCommented = main.querySelector(`.films-list--most-commented .films-list__container`);
-
 let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
-cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
 
-loadMoreButton.getElement().addEventListener(`click`, () => {
-  const prevCardsCount = showingCardsCount;
-  showingCardsCount = showingCardsCount + SHOWING_CARDS_COUNT_BY_BUTTON;
+if (cards.length > 0) {
+  render(main, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
 
-  cards.slice(prevCardsCount, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+  const filmListMain = main.querySelector(`.films-list`);
+  const loadMoreButton = new ShowMoreButtonComponent();
 
-  if (showingCardsCount >= cards.length) {
-    loadMoreButton.getElement().remove();
-  }
-});
+  const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
 
-const getTopRatingCardList = () => {
-  const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating).slice(0, 2);
-  return topRatingCards;
-};
+  const cardBoxTopRating = main.querySelector(`.films-list--top-rated .films-list__container`);
+  const cardBoxMostCommented = main.querySelector(`.films-list--most-commented .films-list__container`);
 
-const getTopCommentsCardList = () => {
-  const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments).slice(0, 2);
-  return topCommentsCards;
-};
+  cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+  render(filmListMain, loadMoreButton.getElement(), RenderPosition.BEFOREEND);
 
-getTopRatingCardList().forEach((card) => renderCard(card, cardBoxTopRating));
-getTopCommentsCardList().forEach((card) => renderCard(card, cardBoxMostCommented));
+  loadMoreButton.getElement().addEventListener(`click`, () => {
+    const prevCardsCount = showingCardsCount;
+    showingCardsCount = showingCardsCount + SHOWING_CARDS_COUNT_BY_BUTTON;
+
+    cards.slice(prevCardsCount, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+
+    if (showingCardsCount >= cards.length) {
+      filmListMain.removeChild(loadMoreButton.getElement());
+    }
+  });
+
+  const getTopRatingCardList = () => {
+    const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating).slice(0, 2);
+    return topRatingCards;
+  };
+
+  const getTopCommentsCardList = () => {
+    const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments).slice(0, 2);
+    return topCommentsCards;
+  };
+
+  getTopRatingCardList().forEach((card) => renderCard(card, cardBoxTopRating));
+  getTopCommentsCardList().forEach((card) => renderCard(card, cardBoxMostCommented));
+} else {
+  render(main, new NoMoviesComponent().getElement(), RenderPosition.BEFOREEND);
+}
