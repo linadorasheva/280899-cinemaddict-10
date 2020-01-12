@@ -86,7 +86,7 @@ const filmAgeRatings = [0, 6, 12, 16, 18];
 
 const generateCard = () => {
   const generateGenres = () => {
-    return genres.filter(() => Math.random() > 0.5)
+    return genres.filter(() => Math.random() > 0.5);
   };
 
   return {
