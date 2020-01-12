@@ -10,7 +10,7 @@ import PopupComponent from './components/popup.js';
 
 import {generateCards} from './mock/card.js';
 
-const QUANTITY_CARDS = 10;
+const QUANTITY_CARDS = 25;
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;
 
@@ -35,21 +35,24 @@ const renderCard = (card, container) => {
 
   const popupCloseBtn = popupComponent.getElement().querySelector(`.film-details__close-btn`);
   popupCloseBtn.addEventListener(`click`, () => popupClose());
-  document.addEventListener(`keydown`, onEscPress);
+
 
   const filmPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
   filmPoster.addEventListener(`click`, () => {
     render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
   });
 
   const filmTitle = cardComponent.getElement().querySelector(`.film-card__title`);
   filmTitle.addEventListener(`click`, () => {
     render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
   });
 
   const filmComments = cardComponent.getElement().querySelector(`.film-card__comments`);
   filmComments.addEventListener(`click`, () => {
     render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
   });
 
   render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
