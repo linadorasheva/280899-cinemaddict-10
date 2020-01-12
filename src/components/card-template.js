@@ -1,13 +1,11 @@
-import {getRandomArrayItem} from '../util.js';
+import {createElement} from '../util.js';
 
 const getButtonClass = (flag) => {
   return flag ? `film-card__controls-item--active` : ``;
 };
 
-export const createCardTemplate = (card) => {
-  const {filmPosterSrc, filmNames, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmComments, isAddWatchList, isWatched, isFavorite} = card;
-
-  const filmName = getRandomArrayItem(Array.from(filmNames));
+const createCardTemplate = (card) => {
+  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenres, filmComments, isAddWatchList, isWatched, isFavorite} = card;
 
   const getShortFilmDescription = () => {
     return filmDescription.length > 139 ? `${filmDescription.slice(0, 139)}...` : filmDescription;
@@ -18,7 +16,7 @@ export const createCardTemplate = (card) => {
   };
 
   const generateGenre = () => {
-    return getRandomArrayItem(Array.from(filmGenre));
+    return filmGenres.slice(0, 1);
   };
 
   return (
@@ -41,3 +39,26 @@ export const createCardTemplate = (card) => {
     </article>`
   );
 };
+
+export default class CardComponent {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCardTemplate(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

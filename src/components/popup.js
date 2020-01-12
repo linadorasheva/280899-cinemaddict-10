@@ -1,34 +1,29 @@
 import {MONTH_NAMES} from '../constants';
-import {shuffleArray, getRandomArrayItem} from '../util.js';
-
-const generateGenres = (data) => {
-  return shuffleArray(Array.from(data)).filter(() => Math.random() > 0.5);
-};
+import {getRandomArrayItem, createElement} from '../util.js';
 
 const generateGenreMarkUp = (data) => {
-  return generateGenres(data).map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
+  return data.map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
 };
 
-export const createPopup = (card) => {
-  const {filmPosterSrc, filmNames, filmDescription, filmRating, filmDate, filmDuration, filmGenre, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
+const createPopup = (card) => {
+  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
 
-  const filmName = getRandomArrayItem(Array.from(filmNames));
   const filmDirector = getRandomArrayItem(Array.from(filmDirectors));
 
   const generateActors = () => {
-    return shuffleArray(Array.from(filmActors)).filter(() => Math.random() > 0.5).join(`, `);
+    return Array.from(filmActors).filter(() => Math.random() > 0.5).join(`, `);
   };
 
   const generateWriters = () => {
-    return shuffleArray(Array.from(filmWriters)).filter(() => Math.random() > 0.5).join(`, `);
+    return Array.from(filmWriters).filter(() => Math.random() > 0.5).join(`, `);
   };
 
   const generateReleaseDate = () => {
     return `${filmDate.getDate()} ${MONTH_NAMES[filmDate.getMonth()]} ${filmDate.getFullYear()}`;
   };
 
-  const genreTitle = generateGenres(filmGenre).length > 1 ? `Genres` : `Genre`;
-
+  const genreMarkUp = generateGenreMarkUp(filmGenres);
+  const genreTitle = filmGenres.length > 1 ? `Genres` : `Genre`;
 
   return (
     `<section class="film-details">
@@ -84,7 +79,7 @@ export const createPopup = (card) => {
                 <tr class="film-details__row">
                 <td class="film-details__term">${genreTitle}</td>
                   <td class="film-details__cell">
-                  ${generateGenreMarkUp(filmGenre)}
+                  ${genreMarkUp}
                 </tr>
               </table>
 
@@ -200,3 +195,26 @@ export const createPopup = (card) => {
     </section>`
   );
 };
+
+export default class PopupComponent {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopup(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,22 +1,62 @@
-import {isEscPress} from './util.js';
+import {isEscPress, RenderPosition, render} from './util.js';
 
-import {createMenu} from './components/menu.js';
-import {createRank} from './components/rank.js';
-import {createFilmsContainer} from './components/films-container.js';
-import {createCardTemplate} from './components/card-template.js';
-import {createShowMoreButton} from './components/show-more-button.js';
-import {createPopup} from './components/popup.js';
+import MenuComponent from './components/menu.js';
+import SortingComponent from './components/sorting.js';
+import RankComponent from './components/rank.js';
+import FilmsContainerComponent from './components/films-container.js';
+import CardComponent from './components/card-template.js';
+import ShowMoreButtonComponent from './components/show-more-button.js';
+import PopupComponent from './components/popup.js';
 
 import {generateCards} from './mock/card.js';
 
-const QUANTITY_CARDS = 15;
+const QUANTITY_CARDS = 25;
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;
 
 const cards = generateCards(QUANTITY_CARDS);
 
-const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
+const pageBody = document.querySelector(`body`);
+
+const onEscPress = () => {
+  if (isEscPress) {
+    popupClose();
+  }
+};
+
+const popupClose = () => {
+  document.querySelector(`.film-details`).remove();
+  document.removeEventListener(`keydown`, onEscPress);
+};
+
+const renderCard = (card, container) => {
+  const cardComponent = new CardComponent(card);
+  const popupComponent = new PopupComponent(card);
+
+  const popupCloseBtn = popupComponent.getElement().querySelector(`.film-details__close-btn`);
+  popupCloseBtn.addEventListener(`click`, () => popupClose());
+
+
+  const filmPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
+  filmPoster.addEventListener(`click`, () => {
+    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
+  });
+
+  const filmTitle = cardComponent.getElement().querySelector(`.film-card__title`);
+  filmTitle.addEventListener(`click`, () => {
+    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
+  });
+
+  const filmComments = cardComponent.getElement().querySelector(`.film-card__comments`);
+  filmComments.addEventListener(`click`, () => {
+    render(pageBody, popupComponent.getElement(), RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, onEscPress);
+  });
+
+  render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
+  render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
 const pageFooter = document.querySelector(`.footer`);
@@ -24,32 +64,34 @@ const footerStatistic = pageFooter.querySelector(`.footer__statistics`).querySel
 footerStatistic.textContent = `${QUANTITY_CARDS}  movies inside`;
 
 const pageHeader = document.querySelector(`.header`);
-render(pageHeader, createRank(QUANTITY_CARDS));
+render(pageHeader, new RankComponent(QUANTITY_CARDS).getElement(), RenderPosition.BEFOREEND);
 
 const main = document.querySelector(`.main`);
-render(main, createMenu(cards), `afterbegin`);
+render(main, new MenuComponent(cards).getElement(), RenderPosition.AFTERBEGIN);
+render(main, new SortingComponent().getElement(), RenderPosition.BEFOREEND);
 
-render(main, createFilmsContainer());
+render(main, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
 
 const filmListMain = main.querySelector(`.films-list`);
-render(filmListMain, createShowMoreButton());
-const loadMoreButton = filmListMain.querySelector(`.films-list__show-more`);
+const loadMoreButton = new ShowMoreButtonComponent();
+render(filmListMain, loadMoreButton.getElement(), RenderPosition.BEFOREEND);
 
 const cardBoxMain = main.querySelector(`.films-list .films-list__container`);
+
 const cardBoxTopRating = main.querySelector(`.films-list--top-rated .films-list__container`);
 const cardBoxMostCommented = main.querySelector(`.films-list--most-commented .films-list__container`);
 
 let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
-cards.slice(0, showingCardsCount).forEach((card) => render(cardBoxMain, createCardTemplate(card)));
+cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
 
-loadMoreButton.addEventListener(`click`, () => {
+loadMoreButton.getElement().addEventListener(`click`, () => {
   const prevCardsCount = showingCardsCount;
   showingCardsCount = showingCardsCount + SHOWING_CARDS_COUNT_BY_BUTTON;
 
-  cards.slice(prevCardsCount, showingCardsCount).forEach((card) => render(cardBoxMain, createCardTemplate(card)));
+  cards.slice(prevCardsCount, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
 
   if (showingCardsCount >= cards.length) {
-    loadMoreButton.remove();
+    loadMoreButton.getElement().remove();
   }
 });
 
@@ -63,26 +105,5 @@ const getTopCommentsCardList = () => {
   return topCommentsCards;
 };
 
-getTopRatingCardList().forEach((card) => render(cardBoxTopRating, createCardTemplate(card)));
-getTopCommentsCardList().forEach((card) => render(cardBoxMostCommented, createCardTemplate(card)));
-
-const onEscPress = () => {
-  if (isEscPress) {
-    popupClose();
-  }
-};
-
-const popupClose = () => {
-  document.querySelector(`.film-details`).remove();
-  document.removeEventListener(`keydown`, onEscPress);
-};
-
-const popupOpen = ()=> {
-  render(pageFooter, createPopup(cards[0]), `afterend`);
-  const popup = document.querySelector(`.film-details`);
-  const popupCloseBtn = popup.querySelector(`.film-details__close-btn`);
-  popupCloseBtn.addEventListener(`click`, () => popupClose());
-  document.addEventListener(`keydown`, onEscPress);
-};
-
-popupOpen();
+getTopRatingCardList().forEach((card) => renderCard(card, cardBoxTopRating));
+getTopCommentsCardList().forEach((card) => renderCard(card, cardBoxMostCommented));
