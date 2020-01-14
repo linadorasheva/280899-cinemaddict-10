@@ -40,22 +40,17 @@ const renderCard = (card, container) => {
   const cardComponent = new CardComponent(card);
   const popupComponent = new PopupComponent(card);
 
-  const popupCloseBtn = popupComponent.getElement().querySelector(`.film-details__close-btn`);
-  popupCloseBtn.addEventListener(`click`, () => popupClose());
+  popupComponent.setClickHandler(popupClose);
 
-
-  const filmPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
-  filmPoster.addEventListener(`click`, () => {
+  cardComponent.setClickHandler(`.film-card__poster`, () => {
     popupOpen(popupComponent);
   });
 
-  const filmTitle = cardComponent.getElement().querySelector(`.film-card__title`);
-  filmTitle.addEventListener(`click`, () => {
+  cardComponent.setClickHandler(`.film-card__title`, () => {
     popupOpen(popupComponent);
   });
 
-  const filmComments = cardComponent.getElement().querySelector(`.film-card__comments`);
-  filmComments.addEventListener(`click`, () => {
+  cardComponent.setClickHandler(`.film-card__comments`, () => {
     popupOpen(popupComponent);
   });
 
@@ -90,7 +85,7 @@ if (cards.length > 0) {
   cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
   render(filmListMain, loadMoreButton, RenderPosition.BEFOREEND);
 
-  loadMoreButton.getElement().addEventListener(`click`, () => {
+  loadMoreButton.setClickHandler(() => {
     const prevCardsCount = showingCardsCount;
     showingCardsCount = showingCardsCount + SHOWING_CARDS_COUNT_BY_BUTTON;
 
