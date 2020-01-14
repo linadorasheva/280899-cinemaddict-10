@@ -1,5 +1,6 @@
 
-import {getRandomInteger, createElement} from '../util.js';
+import {getRandomInteger} from '../util.js';
+import AbstractComponent from './abstract-component.js';
 
 const getRank = (quantity) => {
   const filmsWatched = getRandomInteger(0, quantity);
@@ -26,25 +27,13 @@ const createRank = (quantity) => {
   );
 };
 
-export default class RankComponent {
+export default class RankComponent extends AbstractComponent {
   constructor(quantity) {
+    super();
     this._quantity = quantity;
-    this._element = null;
   }
 
   getTemplate() {
     return createRank(this._quantity);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
