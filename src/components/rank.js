@@ -1,5 +1,5 @@
 
-import {getRandomInteger} from '../util.js';
+import {getRandomInteger} from '../utils/utils.js';
 import AbstractComponent from './abstract-component.js';
 
 const getRank = (quantity) => {

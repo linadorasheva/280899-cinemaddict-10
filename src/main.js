@@ -1,4 +1,4 @@
-import {isEscPress, RenderPosition, render} from './util.js';
+import {isEscPress, RenderPosition, render} from './utils/utils.js';
 
 import MenuComponent from './components/menu.js';
 import SortingComponent from './components/sorting.js';

@@ -1,5 +1,5 @@
-import {MONTH_NAMES} from '../constants';
-import {getRandomArrayItem} from '../util.js';
+import {MONTH_NAMES} from '../utils/constants.js';
+import {getRandomArrayItem} from '../utils/utils.js';
 import AbstractComponent from './abstract-component.js';
 
 const generateGenreMarkUp = (data) => {
