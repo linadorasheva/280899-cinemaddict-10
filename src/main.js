@@ -1,5 +1,5 @@
 import {isEscPress} from './utils/utils.js';
-import {RenderPosition, render} from './utils/render.js';
+import {RenderPosition, render, remove} from './utils/render.js';
 
 import MenuComponent from './components/menu.js';
 import SortingComponent from './components/sorting.js';
@@ -31,8 +31,8 @@ const popupClose = () => {
   document.removeEventListener(`keydown`, onEscPress);
 };
 
-const popupOpen = (element) => {
-  render(pageBody, element, RenderPosition.BEFOREEND);
+const popupOpen = (component) => {
+  render(pageBody, component, RenderPosition.BEFOREEND);
   document.addEventListener(`keydown`, onEscPress);
 };
 
@@ -46,21 +46,21 @@ const renderCard = (card, container) => {
 
   const filmPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
   filmPoster.addEventListener(`click`, () => {
-    popupOpen(popupComponent.getElement());
+    popupOpen(popupComponent);
   });
 
   const filmTitle = cardComponent.getElement().querySelector(`.film-card__title`);
   filmTitle.addEventListener(`click`, () => {
-    popupOpen(popupComponent.getElement());
+    popupOpen(popupComponent);
   });
 
   const filmComments = cardComponent.getElement().querySelector(`.film-card__comments`);
   filmComments.addEventListener(`click`, () => {
-    popupOpen(popupComponent.getElement());
+    popupOpen(popupComponent);
   });
 
-  render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
-  render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
+  render(container, cardComponent, RenderPosition.BEFOREEND);
+  render(container, cardComponent, RenderPosition.BEFOREEND);
 };
 
 const pageFooter = document.querySelector(`.footer`);
@@ -68,16 +68,16 @@ const footerStatistic = pageFooter.querySelector(`.footer__statistics`).querySel
 footerStatistic.textContent = `${QUANTITY_CARDS}  movies inside`;
 
 const pageHeader = document.querySelector(`.header`);
-render(pageHeader, new RankComponent(QUANTITY_CARDS).getElement(), RenderPosition.BEFOREEND);
+render(pageHeader, new RankComponent(QUANTITY_CARDS), RenderPosition.BEFOREEND);
 
 const main = document.querySelector(`.main`);
-render(main, new MenuComponent(cards).getElement(), RenderPosition.AFTERBEGIN);
-render(main, new SortingComponent().getElement(), RenderPosition.BEFOREEND);
+render(main, new MenuComponent(cards), RenderPosition.AFTERBEGIN);
+render(main, new SortingComponent(), RenderPosition.BEFOREEND);
 
 let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
 
 if (cards.length > 0) {
-  render(main, new FilmsContainerComponent().getElement(), RenderPosition.BEFOREEND);
+  render(main, new FilmsContainerComponent(), RenderPosition.BEFOREEND);
 
   const filmListMain = main.querySelector(`.films-list`);
   const loadMoreButton = new ShowMoreButtonComponent();
@@ -88,7 +88,7 @@ if (cards.length > 0) {
   const cardBoxMostCommented = main.querySelector(`.films-list--most-commented .films-list__container`);
 
   cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
-  render(filmListMain, loadMoreButton.getElement(), RenderPosition.BEFOREEND);
+  render(filmListMain, loadMoreButton, RenderPosition.BEFOREEND);
 
   loadMoreButton.getElement().addEventListener(`click`, () => {
     const prevCardsCount = showingCardsCount;
@@ -97,7 +97,7 @@ if (cards.length > 0) {
     cards.slice(prevCardsCount, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
 
     if (showingCardsCount >= cards.length) {
-      filmListMain.removeChild(loadMoreButton.getElement());
+      remove(loadMoreButton);
     }
   });
 
@@ -114,5 +114,5 @@ if (cards.length > 0) {
   getTopRatingCardList().forEach((card) => renderCard(card, cardBoxTopRating));
   getTopCommentsCardList().forEach((card) => renderCard(card, cardBoxMostCommented));
 } else {
-  render(main, new NoMoviesComponent().getElement(), RenderPosition.BEFOREEND);
+  render(main, new NoMoviesComponent(), RenderPosition.BEFOREEND);
 }
