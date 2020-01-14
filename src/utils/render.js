@@ -26,4 +26,4 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {RenderPosition, render, createElement, remove}
+export {RenderPosition, render, createElement, remove};
