@@ -1,5 +1,6 @@
-import {MONTH_NAMES} from '../constants';
-import {getRandomArrayItem, createElement} from '../util.js';
+import {MONTH_NAMES} from '../utils/constants.js';
+import {getRandomArrayItem} from '../utils/utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const generateGenreMarkUp = (data) => {
   return data.map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
@@ -196,25 +197,17 @@ const createPopup = (card) => {
   );
 };
 
-export default class PopupComponent {
+export default class PopupComponent extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createPopup(this._card);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
   }
 }

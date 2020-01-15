@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import AbstractComponent from './abstract-component.js';
 
 const getButtonClass = (flag) => {
   return flag ? `film-card__controls-item--active` : ``;
@@ -40,25 +40,19 @@ const createCardTemplate = (card) => {
   );
 };
 
-export default class CardComponent {
+export default class CardComponent extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createCardTemplate(this._card);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setClickHandler(element, handler) {
+    this.getElement().querySelector(element).addEventListener(`click`, handler);
   }
 
-  removeElement() {
-    this._element = null;
-  }
+
 }

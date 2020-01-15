@@ -1,5 +1,4 @@
-import {createElement} from '../util.js';
-
+import AbstractComponent from './abstract-component.js';
 
 const createMenu = (cards) => {
   const getQuantityFilms = (flag) => {
@@ -29,25 +28,13 @@ const createMenu = (cards) => {
   );
 };
 
-export default class MenuComponent {
+export default class MenuComponent extends AbstractComponent {
   constructor(cards) {
+    super();
     this._cards = cards;
-    this._element = null;
   }
 
   getTemplate() {
     return createMenu(this._cards);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

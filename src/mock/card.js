@@ -1,4 +1,4 @@
-import {getRandomArrayItem, getRandomInteger, getRandomIntegerNumber} from '../util.js';
+import {getRandomArrayItem, getRandomInteger, getRandomIntegerNumber} from '../utils/utils.js';
 
 const filmNames = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`, `Семь`];
 
