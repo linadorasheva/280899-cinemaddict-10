@@ -10,7 +10,7 @@ const createSorting = () => {
     </ul>`
   );
 };
-export default class SortingComponent extends AbstractComponent {
+export default class Sort extends AbstractComponent {
   getTemplate() {
     return createSorting();
   }

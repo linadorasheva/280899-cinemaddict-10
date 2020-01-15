@@ -6,7 +6,7 @@ import ShowMoreButtonComponent from './show-more-button.js';
 import NoMoviesComponent from './no-movies.js';
 import CardComponent from './card-template.js';
 import PopupComponent from './popup.js';
-import SortingComponent from './sorting.js';
+import Sort from './sort.js';
 
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;
@@ -55,7 +55,7 @@ export default class PageController {
   constructor(container) {
     this._container = container;
 
-    this._sortingComponent = new SortingComponent();
+    this._sortingComponent = new Sort();
     this._filmsContainerComponent = new FilmsContainerComponent();
     this._noMoviesComponent = new NoMoviesComponent();
     this._loadMoreButton = new ShowMoreButtonComponent();
