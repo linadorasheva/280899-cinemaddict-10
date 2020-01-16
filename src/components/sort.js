@@ -1,8 +1,8 @@
 import AbstractComponent from './abstract-component.js';
 
 const createSorting = () => {
-  return (`
-  <ul class="sort">
+  return (
+    `<ul class="sort">
       <li><a href="#" class="sort__button sort__button--active" data-sorting="default">Sort by default</a></li>
       <li><a href="#" class="sort__button" data-sorting="date">Sort by date</a></li>
       <li><a href="#" class="sort__button" data-sorting="rating">Sort by rating</a></li>
@@ -15,6 +15,6 @@ export default class Sort extends AbstractComponent {
   }
 
   setClickHandler(handler) {
-    this.getElement().querySelector(`.sort__button`).addEventListener(`click`, handler);
+    this.getElement().querySelectorAll(`.sort__button`).forEach((it) => it.addEventListener(`click`, handler));
   }
 }
