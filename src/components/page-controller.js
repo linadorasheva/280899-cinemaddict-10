@@ -10,6 +10,7 @@ import Sort from './sort.js';
 
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;
+let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
 
 const pageBody = document.querySelector(`body`);
 
@@ -50,6 +51,22 @@ const renderCard = (card, container) => {
   render(container, cardComponent, RenderPosition.BEFOREEND);
 };
 
+const getTopRatingCardList = (cards) => {
+  const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating);
+  return topRatingCards;
+};
+
+const getTopCommentsCardList = (cards) => {
+  const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments);
+  return topCommentsCards;
+};
+
+const getTopDateCardList = (cards) => {
+  const topCommentsCards = cards.slice().sort((a, b) => b.filmDate.getFullYear() - a.filmDate.getFullYear());
+
+  return topCommentsCards;
+};
+
 
 export default class PageController {
   constructor(container) {
@@ -66,8 +83,6 @@ export default class PageController {
 
     render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
-    let showingCardsCount = SHOWING_CARDS_COUNT_ON_START;
-
     if (cards.length) {
       render(container, this._filmsContainerComponent, RenderPosition.BEFOREEND);
 
@@ -78,6 +93,29 @@ export default class PageController {
       const cardBoxMostCommented = container.querySelector(`.films-list--most-commented .films-list__container`);
 
       cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+
+      this._sortingComponent.setClickHandler((evt) => {
+        cardBoxMain.innerHTML = ``;
+        this._sortingComponent.getElement().querySelectorAll(`.sort__button`).forEach((it) => it.classList.remove(`sort__button--active`));
+
+        switch (true) {
+          case evt.target.dataset.sorting === `default` && !evt.target.classList.contains(`sort__button--active`):
+            cards.slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+            evt.target.classList.add(`sort__button--active`);
+            break;
+          case evt.target.dataset.sorting === `date` && !evt.target.classList.contains(`sort__button--active`):
+
+            getTopDateCardList(cards).slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+            evt.target.classList.add(`sort__button--active`);
+            break;
+          case evt.target.dataset.sorting === `rating` && !evt.target.classList.contains(`sort__button--active`):
+            getTopRatingCardList(cards).slice(0, showingCardsCount).forEach((card) => renderCard(card, cardBoxMain));
+            evt.target.classList.add(`sort__button--active`);
+            break;
+          default:
+            break;
+        }
+      }, true);
 
       render(filmListMain, this._loadMoreButton, RenderPosition.BEFOREEND);
 
@@ -92,18 +130,8 @@ export default class PageController {
         }
       });
 
-      const getTopRatingCardList = () => {
-        const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating).slice(0, 2);
-        return topRatingCards;
-      };
-
-      const getTopCommentsCardList = () => {
-        const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments).slice(0, 2);
-        return topCommentsCards;
-      };
-
-      getTopRatingCardList().forEach((card) => renderCard(card, cardBoxTopRating));
-      getTopCommentsCardList().forEach((card) => renderCard(card, cardBoxMostCommented));
+      getTopRatingCardList(cards).slice(0, 2).forEach((card) => renderCard(card, cardBoxTopRating));
+      getTopCommentsCardList(cards).slice(0, 2).forEach((card) => renderCard(card, cardBoxMostCommented));
     } else {
       render(container, this._noMoviesComponent, RenderPosition.BEFOREEND);
     }
