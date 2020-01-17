@@ -14,7 +14,7 @@ export default class Sort extends AbstractComponent {
     return createSorting();
   }
 
-  setClickHandler(handler) {
+  setSortTypeChangeHandler(handler) {
     this.getElement().querySelectorAll(`.sort__button`).forEach((it) => it.addEventListener(`click`, handler));
   }
 }
