@@ -1,12 +1,12 @@
 import {isEscPress} from '../utils/utils.js';
 import {RenderPosition, render, remove} from '../utils/render.js';
 
-import FilmsContainerComponent from './films-container.js';
-import ShowMoreButtonComponent from './show-more-button.js';
-import NoMoviesComponent from './no-movies.js';
-import CardComponent from './card-template.js';
-import PopupComponent from './popup.js';
-import Sort from './sort.js';
+import FilmsContainerComponent from '../components/films-container.js';
+import ShowMoreButtonComponent from '../components/show-more-button.js';
+import NoMoviesComponent from '../components/no-movies.js';
+import CardComponent from '../components/card-template.js';
+import PopupComponent from '../components/popup.js';
+import Sort from '../components/sort.js';
 
 const SHOWING_CARDS_COUNT_ON_START = 5;
 const SHOWING_CARDS_COUNT_BY_BUTTON = 5;

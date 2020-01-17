@@ -2,7 +2,7 @@
 import {RenderPosition, render} from './utils/render.js';
 
 import MenuComponent from './components/menu.js';
-import PageController from './components/page-controller';
+import PageController from './controllers/page-controller';
 import RankComponent from './components/rank.js';
 
 import {generateCards} from './mock/card.js';
