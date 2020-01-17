@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 
-const createFilmsContainer = () => {
+const createFilmsBoard = () => {
   return (
     `<section class="films">
       <section class="films-list">
@@ -23,8 +23,8 @@ const createFilmsContainer = () => {
   );
 };
 
-export default class FilmsContainerComponent extends AbstractComponent {
+export default class FilmsBoardComponent extends AbstractComponent {
   getTemplate() {
-    return createFilmsContainer();
+    return createFilmsBoard();
   }
 }
