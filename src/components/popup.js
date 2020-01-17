@@ -210,4 +210,14 @@ export default class PopupComponent extends AbstractComponent {
   setClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
   }
+
+  setClickAddToWatchlistHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
+  }
+  setClickAlreadyWatchedHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
+  }
+  setClickAddToFavoritesHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
+  }
 }

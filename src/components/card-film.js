@@ -54,5 +54,13 @@ export default class CardComponent extends AbstractComponent {
     this.getElement().querySelector(element).addEventListener(`click`, handler);
   }
 
-
+  setClickAddToWatchlistHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, handler);
+  }
+  setClickAlreadyWatchedHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, handler);
+  }
+  setClickAddToFavoritesHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, handler);
+  }
 }
