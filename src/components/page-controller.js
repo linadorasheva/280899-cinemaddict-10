@@ -52,17 +52,17 @@ const renderCard = (card, container) => {
 };
 
 const getTopRatingCardList = (cards) => {
-  const topRatingCards = cards.slice().sort((a, b) => b.filmRating - a.filmRating);
+  const topRatingCards = cards.slice().sort((a, b) => b.rating - a.rating);
   return topRatingCards;
 };
 
 const getTopCommentsCardList = (cards) => {
-  const topCommentsCards = cards.slice().sort((a, b) => b.filmComments - a.filmComments);
+  const topCommentsCards = cards.slice().sort((a, b) => b.comments - a.comments);
   return topCommentsCards;
 };
 
 const getTopDateCardList = (cards) => {
-  const topCommentsCards = cards.slice().sort((a, b) => b.filmDate.getFullYear() - a.filmDate.getFullYear());
+  const topCommentsCards = cards.slice().sort((a, b) => b.date.getFullYear() - a.date.getFullYear());
 
   return topCommentsCards;
 };

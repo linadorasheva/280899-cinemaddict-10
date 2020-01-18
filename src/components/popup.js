@@ -7,7 +7,7 @@ const generateGenreMarkUp = (data) => {
 };
 
 const createPopup = (card) => {
-  const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
+  const {posterSrc, name, description, rating, date, duration, genres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
 
   const filmDirector = getRandomArrayItem(Array.from(filmDirectors));
 
@@ -20,11 +20,11 @@ const createPopup = (card) => {
   };
 
   const generateReleaseDate = () => {
-    return `${filmDate.getDate()} ${MONTH_NAMES[filmDate.getMonth()]} ${filmDate.getFullYear()}`;
+    return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   };
 
-  const genreMarkUp = generateGenreMarkUp(filmGenres);
-  const genreTitle = filmGenres.length > 1 ? `Genres` : `Genre`;
+  const genreMarkUp = generateGenreMarkUp(genres);
+  const genreTitle = genres.length > 1 ? `Genres` : `Genre`;
 
   return (
     `<section class="film-details">
@@ -35,7 +35,7 @@ const createPopup = (card) => {
           </div>
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
-              <img class="film-details__poster-img" src="${filmPosterSrc}" alt="">
+              <img class="film-details__poster-img" src="${posterSrc}" alt="">
 
               <p class="film-details__age">${filmAgeRating} +</p>
             </div>
@@ -43,12 +43,12 @@ const createPopup = (card) => {
             <div class="film-details__info">
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
-                  <h3 class="film-details__title">${filmName}</h3>
-                  <p class="film-details__title-original">Original: ${filmOriginalName[filmName]}</p>
+                  <h3 class="film-details__title">${name}</h3>
+                  <p class="film-details__title-original">Original: ${filmOriginalName[name]}</p>
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${filmRating}</p>
+                  <p class="film-details__total-rating">${rating}</p>
                 </div>
               </div>
 
@@ -71,7 +71,7 @@ const createPopup = (card) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${filmDuration}</td>
+                  <td class="film-details__cell">${duration}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
@@ -85,7 +85,7 @@ const createPopup = (card) => {
               </table>
 
               <p class="film-details__film-description">
-              ${filmDescription}
+              ${description}
               </p>
             </div>
           </div>
