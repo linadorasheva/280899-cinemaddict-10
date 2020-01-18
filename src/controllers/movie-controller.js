@@ -1,6 +1,6 @@
 import {isEscPress} from '../utils/utils.js';
 import {RenderPosition, render} from '../utils/render.js';
-import CardComponent from '../components/card-film';
+import CardComponent from '../components/film-card';
 import PopupComponent from '../components/popup.js';
 
 const pageBody = document.querySelector(`body`);
