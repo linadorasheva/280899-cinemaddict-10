@@ -3,6 +3,7 @@ import {RenderPosition, render, remove} from '../utils/render.js';
 import FilmsBoardComponent from '../components/films-container.js';
 import LoadMoreButtonComponent from '../components/show-more-button.js';
 import NoMoviesComponent from '../components/no-movies.js';
+import MenuComponent from '../components/menu.js';
 import Sort from '../components/sort.js';
 
 import MovieController from './movie-controller';
@@ -27,7 +28,6 @@ const getTopDateCardList = (cards) => {
   return topCommentsCards;
 };
 
-
 export default class PageController {
   constructor(container) {
     this._container = container;
@@ -51,6 +51,7 @@ export default class PageController {
     const container = this._container;
     this._cards = cards;
 
+    render(container, new MenuComponent(this._getQuantityFilmsByCategory()), RenderPosition.AFTERBEGIN);
     render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
     if (cards.length) {
@@ -111,5 +112,15 @@ export default class PageController {
         remove(this._loadMoreButton);
       }
     }));
+  }
+
+  _getQuantityFilmsByCategory() {
+    const cards = this._cards;
+    const quantityFilmsByCategory = {};
+    quantityFilmsByCategory.addedToWatchlist = cards.filter((it) => it.isAddWatchList).length;
+    quantityFilmsByCategory.alreadyViewedFilms = cards.filter((it) => it.isWatched).length;
+    quantityFilmsByCategory.favoriteFilms = cards.filter((it) => it.isFavorite).length;
+
+    return quantityFilmsByCategory;
   }
 }

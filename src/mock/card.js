@@ -1,6 +1,6 @@
 import {getRandomArrayItem, getRandomInteger, getRandomIntegerNumber} from '../utils/utils.js';
 
-const filmNames = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`, `Семь`];
+const names = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`, `Семь`];
 
 const filmOriginalsName = {
   'Побег из Шоушенка': `The Shawshank Redemption`,
@@ -19,7 +19,7 @@ const filmOriginalsName = {
   'Семь': `Se7en`
 };
 
-const filmDescriptionTemplate = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
+const descriptionTemplate = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 
 const imgPath = `./images/posters/`;
 const imgNames = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
@@ -47,19 +47,19 @@ const Comments = {
   MAX: 30
 };
 
-const generateFilmDescription = (template) => {
+const generateDescription = (template) => {
   return template.split(`.`).filter(() => Math.random() > 0.5).slice(0, 3).join(`.`);
 };
 
-const generateFilmPosterSrc = () => {
+const generatePosterSrc = () => {
   return `${imgPath}${getRandomArrayItem(imgNames)}`;
 };
 
-const generateFilmRating = () => {
+const generateRating = () => {
   return getRandomInteger(Rating.MIN, Rating.MAX) / 10;
 };
 
-const generateFilmDuration = () => {
+const generateDuration = () => {
   return `${getRandomInteger(Timing.hourMin, Timing.hourMax)}h ${getRandomInteger(Timing.minuteMin, Timing.minuteMax)}m`;
 };
 
@@ -79,10 +79,18 @@ const getDate = () => {
 };
 
 const filmDirectors = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
-const filmWriter = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
+const filmWriters = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmActors = [`Robert De Niro`, `Gwyneth Paltrow`, `Al Pacino`, `Brad Pitt`, `Leonardo DiCaprio`, `Tom Cruise`, `Kate Winslet`, `Tom Hardy`, `Joel Edgerton`, `Marlon Brando`, `Emma Stone`];
 const filmCountries = [`USA`, `UK`, `Italy`, `Spain`, `France`, `Japan`, `Norway`, `Portugal`, `Mexico`];
 const filmAgeRatings = [0, 6, 12, 16, 18];
+
+const generateActors = () => {
+  return filmActors.filter(() => Math.random() > 0.5).join(`, `);
+};
+
+const generateWriters = () => {
+  return filmWriters.filter(() => Math.random() > 0.5).join(`, `);
+};
 
 const generateCard = () => {
   const generateGenres = () => {
@@ -90,21 +98,21 @@ const generateCard = () => {
   };
 
   return {
-    filmPosterSrc: generateFilmPosterSrc(),
-    filmName: getRandomArrayItem(filmNames),
+    posterSrc: generatePosterSrc(),
+    name: getRandomArrayItem(names),
     filmOriginalName: filmOriginalsName,
-    filmDescription: generateFilmDescription(filmDescriptionTemplate),
-    filmRating: generateFilmRating(),
-    filmDate: getDate(),
-    filmDuration: generateFilmDuration(),
-    filmGenres: generateGenres(),
-    filmComments: generateCommentsQuantity(),
+    description: generateDescription(descriptionTemplate),
+    rating: generateRating(),
+    date: getDate(),
+    duration: generateDuration(),
+    genres: generateGenres(),
+    comments: generateCommentsQuantity(),
     isAddWatchList: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
     filmDirectors: new Set(filmDirectors),
-    filmWriters: new Set(filmWriter),
-    filmActors: new Set(filmActors),
+    filmWriters: generateWriters(),
+    filmActors: generateActors(),
     filmCountry: getRandomArrayItem(filmCountries),
     filmAgeRating: getRandomArrayItem(filmAgeRatings)
   };

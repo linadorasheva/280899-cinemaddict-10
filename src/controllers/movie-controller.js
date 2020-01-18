@@ -30,17 +30,9 @@ export default class MovieController {
 
     popupComponent.setClickHandler(popupClose);
 
-    cardComponent.setClickHandler(`.film-card__poster`, () => {
-      popupOpen(popupComponent);
-    });
-
-    cardComponent.setClickHandler(`.film-card__title`, () => {
-      popupOpen(popupComponent);
-    });
-
-    cardComponent.setClickHandler(`.film-card__comments`, () => {
-      popupOpen(popupComponent);
-    });
+    cardComponent.setFilmPosterClickHandler(() => popupOpen(popupComponent));
+    cardComponent.setFilmTitleClickHandler(() => popupOpen(popupComponent));
+    cardComponent.setFilmCommentsClickHandler(() => popupOpen(popupComponent));
 
     render(container, cardComponent, RenderPosition.BEFOREEND);
   }
