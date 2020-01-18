@@ -9,8 +9,6 @@ const generateGenreMarkUp = (data) => {
 const createPopup = (card) => {
   const {posterSrc, name, description, rating, date, duration, genres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
 
-  const filmDirector = getRandomArrayItem(Array.from(filmDirectors));
-
   const generateActors = () => {
     return Array.from(filmActors).filter(() => Math.random() > 0.5).join(`, `);
   };
@@ -22,9 +20,6 @@ const createPopup = (card) => {
   const generateReleaseDate = () => {
     return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   };
-
-  const genreMarkUp = generateGenreMarkUp(genres);
-  const genreTitle = genres.length > 1 ? `Genres` : `Genre`;
 
   return (
     `<section class="film-details">
@@ -55,7 +50,7 @@ const createPopup = (card) => {
               <table class="film-details__table">
                 <tr class="film-details__row">
                   <td class="film-details__term">Director</td>
-                  <td class="film-details__cell">${filmDirector}</td>
+                  <td class="film-details__cell">${getRandomArrayItem(Array.from(filmDirectors))}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
@@ -78,9 +73,9 @@ const createPopup = (card) => {
                   <td class="film-details__cell">${filmCountry}</td>
                 </tr>
                 <tr class="film-details__row">
-                <td class="film-details__term">${genreTitle}</td>
+                <td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
                   <td class="film-details__cell">
-                  ${genreMarkUp}
+                  ${generateGenreMarkUp(genres)}
                 </tr>
               </table>
 
