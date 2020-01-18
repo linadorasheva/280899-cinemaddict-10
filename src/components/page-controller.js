@@ -36,9 +36,9 @@ const renderCard = (card, container) => {
 
   popupComponent.setClickHandler(popupClose);
 
-  cardComponent.setFilmPosterClickHandler(() => popupOpen(popupComponent))
-  cardComponent.setFilmTitleClickHandler(() => popupOpen(popupComponent))
-  cardComponent.setFilmCommentsClickHandler(() => popupOpen(popupComponent))
+  cardComponent.setFilmPosterClickHandler(() => popupOpen(popupComponent));
+  cardComponent.setFilmTitleClickHandler(() => popupOpen(popupComponent));
+  cardComponent.setFilmCommentsClickHandler(() => popupOpen(popupComponent));
 
   render(container, cardComponent, RenderPosition.BEFOREEND);
 };
