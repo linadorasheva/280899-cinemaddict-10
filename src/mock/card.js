@@ -79,10 +79,18 @@ const getDate = () => {
 };
 
 const filmDirectors = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
-const filmWriter = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
+const filmWriters = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmActors = [`Robert De Niro`, `Gwyneth Paltrow`, `Al Pacino`, `Brad Pitt`, `Leonardo DiCaprio`, `Tom Cruise`, `Kate Winslet`, `Tom Hardy`, `Joel Edgerton`, `Marlon Brando`, `Emma Stone`];
 const filmCountries = [`USA`, `UK`, `Italy`, `Spain`, `France`, `Japan`, `Norway`, `Portugal`, `Mexico`];
 const filmAgeRatings = [0, 6, 12, 16, 18];
+
+const generateActors = () => {
+  return filmActors.filter(() => Math.random() > 0.5).join(`, `);
+};
+
+const generateWriters = () => {
+  return filmWriters.filter(() => Math.random() > 0.5).join(`, `);
+};
 
 const generateCard = () => {
   const generateGenres = () => {
@@ -103,8 +111,8 @@ const generateCard = () => {
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
     filmDirectors: new Set(filmDirectors),
-    filmWriters: new Set(filmWriter),
-    filmActors: new Set(filmActors),
+    filmWriters: generateWriters(),
+    filmActors: generateActors(),
     filmCountry: getRandomArrayItem(filmCountries),
     filmAgeRating: getRandomArrayItem(filmAgeRatings)
   };

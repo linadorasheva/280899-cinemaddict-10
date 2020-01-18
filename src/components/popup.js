@@ -9,14 +9,6 @@ const generateGenreMarkUp = (data) => {
 const createPopup = (card) => {
   const {posterSrc, name, description, rating, date, duration, genres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating} = card;
 
-  const generateActors = () => {
-    return Array.from(filmActors).filter(() => Math.random() > 0.5).join(`, `);
-  };
-
-  const generateWriters = () => {
-    return Array.from(filmWriters).filter(() => Math.random() > 0.5).join(`, `);
-  };
-
   const generateReleaseDate = () => {
     return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   };
@@ -54,11 +46,11 @@ const createPopup = (card) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${generateWriters()}</td>
+                  <td class="film-details__cell">${filmWriters}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${generateActors()}</td>
+                  <td class="film-details__cell">${filmActors}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
