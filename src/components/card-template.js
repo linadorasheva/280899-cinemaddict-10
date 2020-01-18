@@ -1,9 +1,5 @@
 import AbstractComponent from './abstract-component.js';
 
-const getButtonClass = (flag) => {
-  return flag ? `film-card__controls-item--active` : ``;
-};
-
 const createCardTemplate = (card) => {
   const {filmPosterSrc, filmName, filmDescription, filmRating, filmDate, filmDuration, filmGenres, filmComments, isAddWatchList, isWatched, isFavorite} = card;
 
@@ -32,9 +28,9 @@ const createCardTemplate = (card) => {
       <p class="film-card__description">${getShortFilmDescription()}</p>
       <a class="film-card__comments">${filmComments} comments</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${getButtonClass(isAddWatchList)}">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${getButtonClass(isWatched)}">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite ${getButtonClass(isFavorite)}">Mark as favorite</button>
+        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isAddWatchList ? `film-card__controls-item--active` : ``}">Add to watchlist</button>
+        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isWatched ? `film-card__controls-item--active` : ``}">Mark as watched</button>
+        <button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorite ? `film-card__controls-item--active` : ``}">Mark as favorite</button>
       </form>
     </article>`
   );
