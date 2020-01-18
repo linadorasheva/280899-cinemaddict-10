@@ -6,6 +6,7 @@ import ShowMoreButtonComponent from './show-more-button.js';
 import NoMoviesComponent from './no-movies.js';
 import CardComponent from './card-template.js';
 import PopupComponent from './popup.js';
+import MenuComponent from './menu.js';
 import Sort from './sort.js';
 
 const SHOWING_CARDS_COUNT_ON_START = 5;
@@ -59,11 +60,11 @@ const getTopDateCardList = (cards) => {
   return topCommentsCards;
 };
 
-
 export default class PageController {
   constructor(container) {
     this._container = container;
 
+    this._cards = [];
     this._sortingComponent = new Sort();
     this._filmsContainerComponent = new FilmsContainerComponent();
     this._noMoviesComponent = new NoMoviesComponent();
@@ -72,7 +73,9 @@ export default class PageController {
 
   render(cards) {
     const container = this._container;
+    this._cards = cards;
 
+    render(container, new MenuComponent(this._getQuantityFilmsByCategory()), RenderPosition.AFTERBEGIN);
     render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
     if (cards.length) {
@@ -127,5 +130,15 @@ export default class PageController {
     } else {
       render(container, this._noMoviesComponent, RenderPosition.BEFOREEND);
     }
+  }
+
+  _getQuantityFilmsByCategory() {
+    const cards = this._cards;
+    const quantityFilmsByCategory = {};
+    quantityFilmsByCategory.addedToWatchlist = cards.filter((it) => it.isAddWatchList).length;
+    quantityFilmsByCategory.alreadyViewedFilms = cards.filter((it) => it.isWatched).length;
+    quantityFilmsByCategory.favoriteFilms = cards.filter((it) => it.isFavorite).length;
+
+    return quantityFilmsByCategory;
   }
 }
