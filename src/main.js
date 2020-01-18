@@ -1,7 +1,6 @@
 
 import {RenderPosition, render} from './utils/render.js';
 
-import MenuComponent from './components/menu.js';
 import PageController from './components/page-controller';
 import RankComponent from './components/rank.js';
 
@@ -19,7 +18,6 @@ const pageHeader = document.querySelector(`.header`);
 render(pageHeader, new RankComponent(QUANTITY_CARDS), RenderPosition.BEFOREEND);
 
 const main = document.querySelector(`.main`);
-render(main, new MenuComponent(cards), RenderPosition.AFTERBEGIN);
 
 const pageController = new PageController(main);
 pageController.render(cards);
