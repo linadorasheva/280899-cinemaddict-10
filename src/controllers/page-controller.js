@@ -28,9 +28,9 @@ const getTopDateCardList = (cards) => {
   return topCommentsCards;
 };
 
-const renderCards = (cards, taskListElement, onDataChange) => {
+const renderCards = (cards, filmsListContainer, onDataChange) => {
   return cards.map((card) => {
-    const movieController = new MovieController(taskListElement, onDataChange);
+    const movieController = new MovieController(filmsListContainer, onDataChange);
     movieController.render(card);
 
     return movieController;
@@ -59,7 +59,7 @@ export default class PageController {
     this._cards = cards;
 
     this._renderMenu(this._cards);
-    // render(container, this._menuComponent, RenderPosition.AFTERBEGIN);
+
     render(container, this._sortingComponent, RenderPosition.BEFOREEND);
 
     if (cards.length) {
