@@ -246,6 +246,7 @@ export default class PopupComponent extends AbstractSmartComponent {
     this._isWatched = card.isWatched;
     this._isFavorite = card.isFavorite;
 
+    this._clickBtnCloseHandler = null;
     this._subscribeOnEvents();
   }
 
@@ -253,17 +254,13 @@ export default class PopupComponent extends AbstractSmartComponent {
     return createPopup(this._card);
   }
 
+
   _subscribeOnEvents() {
     const element = this.getElement();
 
-    element.querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
-      this.getElement().parentNode.removeChild(this.getElement());
-
-      document.removeEventListener(`keydown`, this._onEscPress);
-    });
-
     element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
       this._isAddWatchList = !this._isAddWatchList;
+      // ПРОБЛЕМА не срабатывает ререндер - всплывает старый попап,- не учитывается, что данные изменились при нажатии на кнопку
       // this.rerender();
     });
 
@@ -296,6 +293,7 @@ export default class PopupComponent extends AbstractSmartComponent {
   }
 
   recoveryListeners() {
+    this.setClickBtnCloseHandler(this._clickBtnCloseHandler);
     this._subscribeOnEvents();
   }
 
@@ -305,5 +303,12 @@ export default class PopupComponent extends AbstractSmartComponent {
 
   _removeRatioBlock() {
     this.getElement().querySelector(`.film-details__user-rating-wrap`).remove();
+  }
+
+  setClickBtnCloseHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, handler);
+
+    this._clickBtnCloseHandler = handler;
   }
 }

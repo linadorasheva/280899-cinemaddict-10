@@ -1,15 +1,24 @@
 import {isEscPress} from '../utils/utils.js';
-import {RenderPosition, render, replace} from '../utils/render.js';
+import {RenderPosition, render, replace, remove} from '../utils/render.js';
 import CardComponent from '../components/film-card';
 import PopupComponent from '../components/popup.js';
+
+const Mode = {
+  DEFAULT: `default`,
+  EXTENDED: `extended`,
+};
 
 const pageBody = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
     this._cardComponent = null;
+    this._popupComponent = null;
+    this._mode = Mode.DEFAULT;
+    this._onEscPress = this._onEscPress.bind(this);
   }
 
   render(card) {
@@ -18,19 +27,21 @@ export default class MovieController {
     this._cardComponent = new CardComponent(card);
     this._popupComponent = new PopupComponent(card);
 
+    this._popupComponent.setClickBtnCloseHandler(() => this._popupClose());
+
     this._cardComponent.setFilmPosterClickHandler(() => {
-      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
-      document.addEventListener(`keydown`, this._onEscPress);
+      this._onViewChange();
+      this._renderPopup();
     });
 
     this._cardComponent.setFilmTitleClickHandler(() => {
-      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
-      document.addEventListener(`keydown`, this._onEscPress);
+      this._onViewChange();
+      this._renderPopup();
     });
 
     this._cardComponent.setFilmCommentsClickHandler(() => {
-      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
-      document.addEventListener(`keydown`, this._onEscPress);
+      this._onViewChange();
+      this._renderPopup();
     });
 
     this._cardComponent.setClickAddToWatchlistHandler(() => {
@@ -58,10 +69,33 @@ export default class MovieController {
     }
   }
 
+  _renderPopup() {
+    render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
+    document.addEventListener(`keydown`, this._onEscPress);
+
+    this._mode = Mode.EXTENDED;
+  }
+
   _onEscPress() {
     if (isEscPress) {
-      pageBody.removeChild(pageBody.querySelector(`.film-details`));
-      document.removeEventListener(`keydown`, this._onEscPress);
+      this._popupComponent.getElement().remove();
+
+      // ПРОБЛЕМА если удаляю так, то после закрытия попапа по escape, его последущее закрытие по крестику не срабатывает
+      // remove(this._popupComponent);
+      this._mode = Mode.DEFAULT;
     }
+  }
+
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._renderPopup();
+    }
+  }
+
+  _popupClose() {
+    this._popupComponent.getElement().remove();
+    document.removeEventListener(`keydown`, this._onEscPress);
+
+    this._mode = Mode.DEFAULT;
   }
 }
