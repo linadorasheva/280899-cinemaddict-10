@@ -5,23 +5,6 @@ import PopupComponent from '../components/popup.js';
 
 const pageBody = document.querySelector(`body`);
 
-const onEscPress = () => {
-  if (isEscPress) {
-    popupClose();
-  }
-};
-
-const popupClose = () => {
-  pageBody.removeChild(pageBody.querySelector(`.film-details`));
-  document.removeEventListener(`keydown`, onEscPress);
-};
-
-const popupOpen = (component) => {
-  render(pageBody, component, RenderPosition.BEFOREEND);
-  document.addEventListener(`keydown`, onEscPress);
-};
-
-
 export default class MovieController {
   constructor(container, onDataChange) {
     this._container = container;
@@ -35,11 +18,20 @@ export default class MovieController {
     this._cardComponent = new CardComponent(card);
     this._popupComponent = new PopupComponent(card);
 
-    this._popupComponent.setClickHandler(popupClose);
+    this._cardComponent.setFilmPosterClickHandler(() => {
+      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
+      document.addEventListener(`keydown`, this._onEscPress);
+    });
 
-    this._cardComponent.setFilmPosterClickHandler(() => popupOpen(this._popupComponent));
-    this._cardComponent.setFilmTitleClickHandler(() => popupOpen(this._popupComponent));
-    this._cardComponent.setFilmCommentsClickHandler(() => popupOpen(this._popupComponent));
+    this._cardComponent.setFilmTitleClickHandler(() => {
+      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
+      document.addEventListener(`keydown`, this._onEscPress);
+    });
+
+    this._cardComponent.setFilmCommentsClickHandler(() => {
+      render(pageBody, this._popupComponent, RenderPosition.BEFOREEND);
+      document.addEventListener(`keydown`, this._onEscPress);
+    });
 
     this._cardComponent.setClickAddToWatchlistHandler(() => {
       this._onDataChange(this, card, Object.assign({}, card, {
@@ -64,6 +56,12 @@ export default class MovieController {
     } else {
       render(this._container, this._cardComponent, RenderPosition.BEFOREEND);
     }
+  }
 
+  _onEscPress() {
+    if (isEscPress) {
+      pageBody.removeChild(pageBody.querySelector(`.film-details`));
+      document.removeEventListener(`keydown`, this._onEscPress);
+    }
   }
 }
