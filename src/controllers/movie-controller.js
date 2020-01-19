@@ -1,5 +1,5 @@
 import {isEscPress} from '../utils/utils.js';
-import {RenderPosition, render} from '../utils/render.js';
+import {RenderPosition, render, replace} from '../utils/render.js';
 import CardComponent from '../components/film-card';
 import PopupComponent from '../components/popup.js';
 
@@ -23,17 +23,47 @@ const popupOpen = (component) => {
 
 
 export default class MovieController {
+  constructor(container, onDataChange) {
+    this._container = container;
+    this._onDataChange = onDataChange;
+    this._cardComponent = null;
+  }
 
-  render(card, container) {
-    const cardComponent = new CardComponent(card);
-    const popupComponent = new PopupComponent(card);
+  render(card) {
+    const oldCardComponent = this._cardComponent;
 
-    popupComponent.setClickHandler(popupClose);
+    this._cardComponent = new CardComponent(card);
+    this._popupComponent = new PopupComponent(card);
 
-    cardComponent.setFilmPosterClickHandler(() => popupOpen(popupComponent));
-    cardComponent.setFilmTitleClickHandler(() => popupOpen(popupComponent));
-    cardComponent.setFilmCommentsClickHandler(() => popupOpen(popupComponent));
+    this._popupComponent.setClickHandler(popupClose);
 
-    render(container, cardComponent, RenderPosition.BEFOREEND);
+    this._cardComponent.setFilmPosterClickHandler(() => popupOpen(this._popupComponent));
+    this._cardComponent.setFilmTitleClickHandler(() => popupOpen(this._popupComponent));
+    this._cardComponent.setFilmCommentsClickHandler(() => popupOpen(this._popupComponent));
+
+    this._cardComponent.setClickAddToWatchlistHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isAddWatchList: !card.isAddWatchList
+      }));
+    });
+
+    this._cardComponent.setClickAlreadyWatchedHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isWatched: !card.isWatched
+      }));
+    });
+
+    this._cardComponent.setClickAddToFavoritesHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isFavorite: !card.isFavorite
+      }));
+    });
+
+    if (oldCardComponent && this._cardComponent) {
+      replace(this._cardComponent, oldCardComponent);
+    } else {
+      render(this._container, this._cardComponent, RenderPosition.BEFOREEND);
+    }
+
   }
 }
