@@ -2,7 +2,7 @@ import {getRandomArrayItem, getRandomInteger, getRandomIntegerNumber} from '../u
 
 const names = [`Побег из Шоушенка`, `Форрест Гамп`, `Крестный отец`, `Интерстеллар`, `Нокдаун`, `Прислуга`, `В погоне за счастьем`, `Адвокат дьявола`, `Воин`, `Гаттака`, `Бойцовский клуб`, `Терминал`, `Титаник`, `Семь`];
 
-const filmOriginalsName = {
+const originalName = {
   'Побег из Шоушенка': `The Shawshank Redemption`,
   'Форрест Гамп': `Forrest Gump`,
   'Крестный отец': `The Godfather`,
@@ -78,7 +78,7 @@ const getDate = () => {
   return date;
 };
 
-const filmDirectors = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
+const directors = [`James Cameron`, `David Fincher`, `Christopher Nolan`, `Gavin O'Connor`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmWriters = [`James Cameron`, `Chuck Palahniuk`, `Christopher Nolan`, `Gavin O'Connor`, `Cliff Dorfman`, `Anthony Tambakis`, `Francis Ford Coppola`, `Tate Taylor`];
 const filmActors = [`Robert De Niro`, `Gwyneth Paltrow`, `Al Pacino`, `Brad Pitt`, `Leonardo DiCaprio`, `Tom Cruise`, `Kate Winslet`, `Tom Hardy`, `Joel Edgerton`, `Marlon Brando`, `Emma Stone`];
 const filmCountries = [`USA`, `UK`, `Italy`, `Spain`, `France`, `Japan`, `Norway`, `Portugal`, `Mexico`];
@@ -100,7 +100,7 @@ const generateCard = () => {
   return {
     posterSrc: generatePosterSrc(),
     name: getRandomArrayItem(names),
-    filmOriginalName: filmOriginalsName,
+    originalName,
     description: generateDescription(descriptionTemplate),
     rating: generateRating(),
     date: getDate(),
@@ -110,11 +110,11 @@ const generateCard = () => {
     isAddWatchList: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
-    filmDirectors: new Set(filmDirectors),
-    filmWriters: generateWriters(),
-    filmActors: generateActors(),
-    filmCountry: getRandomArrayItem(filmCountries),
-    filmAgeRating: getRandomArrayItem(filmAgeRatings)
+    directors: new Set(directors),
+    writers: generateWriters(),
+    actors: generateActors(),
+    country: getRandomArrayItem(filmCountries),
+    ageRating: getRandomArrayItem(filmAgeRatings)
   };
 };
 
