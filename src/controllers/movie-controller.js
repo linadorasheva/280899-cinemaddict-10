@@ -80,8 +80,8 @@ export default class MovieController {
     if (isEscPress) {
       this._popupComponent.getElement().remove();
 
-      // ПРОБЛЕМА если удаляю так, то после закрытия попапа по escape, его последущее закрытие по крестику не срабатывает
-      // remove(this._popupComponent);
+      // ПРОБЛЕМА если удаляю так (вместо строчки выше), то после закрытия попапа по escape, при его последующем открытии, закрытие по крестику не срабатывает
+      remove(this._popupComponent);
       this._mode = Mode.DEFAULT;
     }
   }
