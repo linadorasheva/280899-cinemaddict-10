@@ -81,7 +81,7 @@ export default class MovieController {
       this._popupComponent.getElement().remove();
 
       // ПРОБЛЕМА если удаляю так (вместо строчки выше), то после закрытия попапа по escape, при его последующем открытии, закрытие по крестику не срабатывает
-      remove(this._popupComponent);
+      // remove(this._popupComponent);
       this._mode = Mode.DEFAULT;
     }
   }
