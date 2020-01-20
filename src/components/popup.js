@@ -1,7 +1,8 @@
-import {MONTH_NAMES} from '../utils/constants.js';
 import {getRandomArrayItem} from '../utils/utils.js';
 import AbstractSmartComponent from './abstract-smart-component';
 import {createElement} from '../utils/render.js';
+import moment from 'moment';
+
 const generateGenreMarkUp = (data) => {
   return data.map((it) => `<span class="film-details__genre">${it}</span>`).join(`\n`);
 };
@@ -58,10 +59,10 @@ const generateRatioBlock = () => {
 };
 
 const createPopup = (card) => {
-  const {posterSrc, name, description, rating, date, duration, genres, filmOriginalName, filmDirectors, filmWriters, filmActors, filmCountry, filmAgeRating, isAddWatchList, isWatched, isFavorite} = card;
+  const {posterSrc, name, description, rating, date, duration, genres, originalName, directors, writers, actors, country, ageRating, isAddWatchList, isWatched, isFavorite} = card;
 
   const generateReleaseDate = () => {
-    return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+    return moment(date).format(`DD MMMM YYYY`);
   };
 
   return (
@@ -75,14 +76,14 @@ const createPopup = (card) => {
             <div class="film-details__poster">
               <img class="film-details__poster-img" src="${posterSrc}" alt="">
 
-              <p class="film-details__age">${filmAgeRating} +</p>
+              <p class="film-details__age">${ageRating} +</p>
             </div>
 
             <div class="film-details__info">
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${name}</h3>
-                  <p class="film-details__title-original">Original: ${filmOriginalName[name]}</p>
+                  <p class="film-details__title-original">Original: ${originalName[name]}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -93,15 +94,15 @@ const createPopup = (card) => {
               <table class="film-details__table">
                 <tr class="film-details__row">
                   <td class="film-details__term">Director</td>
-                  <td class="film-details__cell">${getRandomArrayItem(Array.from(filmDirectors))}</td>
+                  <td class="film-details__cell">${getRandomArrayItem(Array.from(directors))}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${filmWriters}</td>
+                  <td class="film-details__cell">${writers}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${filmActors}</td>
+                  <td class="film-details__cell">${actors}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
@@ -113,7 +114,7 @@ const createPopup = (card) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${filmCountry}</td>
+                  <td class="film-details__cell">${country}</td>
                 </tr>
                 <tr class="film-details__row">
                 <td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
@@ -276,7 +277,7 @@ export default class PopupComponent extends AbstractSmartComponent {
 
     element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
       this._isFavorite = !this._isFavorite;
-      this.rerender();
+      // this.rerender();
     });
 
     element.querySelector(`.film-details__emoji-list`).addEventListener(`click`, (evt) => {
